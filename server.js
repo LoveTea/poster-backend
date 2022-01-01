@@ -10,7 +10,7 @@ app.use(cors());
 
 mongoose
     .connect(
-        `mongodb+srv://tea:${process.env.DB_PASSWORD}@postercluster.krjar.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+        `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@postercluster.krjar.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
     )
     .then(() => {
         console.log("DB CONNECT SUCCESS");
