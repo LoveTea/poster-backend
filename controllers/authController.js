@@ -31,9 +31,11 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.signup = catchAsync(async (req, res) => {
+    const { email, password } = req.body;
+
     const newUser = await User.create({
-        email: req.body.email,
-        password: req.body.password,
+        email,
+        password,
     });
 
     const token = signToken(newUser.id, newUser.email);
