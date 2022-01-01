@@ -1,12 +1,7 @@
-const express = require("express");
 require("dotenv").config();
 const mongoose = require("mongoose");
-const app = express();
-const cors = require("cors");
-const userRoutes = require("./routes/userRoutes");
 
-app.use(express.json());
-app.use(cors());
+const app = require("./app");
 
 mongoose
     .connect(
@@ -18,8 +13,6 @@ mongoose
     .catch(() => {
         console.log("DB CONNECT ERROR");
     });
-
-app.use("/api/v1/users", userRoutes);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
