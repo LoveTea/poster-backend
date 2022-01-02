@@ -3,6 +3,7 @@ const AppError = require("../utils/appError");
 const Post = require("../models/postModel");
 
 exports.add = catchAsync(async (req, res, next) => {
+    const { id } = req.user;
     const { title, text } = req.body;
 
     if (!title || !text) {
@@ -12,6 +13,7 @@ exports.add = catchAsync(async (req, res, next) => {
     await Post.create({
         title,
         text,
+        author: id,
     });
 
     res.status(201);

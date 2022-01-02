@@ -45,3 +45,29 @@ exports.signup = catchAsync(async (req, res) => {
         token,
     });
 });
+
+exports.protect = catchAsync(async (req, res, next) => {
+    let token = null;
+    if (req.headers.authorization && req.headers.authorization.split(" ")[1]) {
+        token = req.headers.authorization.split(" ")[1];
+    }
+
+    if (!token) {
+        return next(new AppError("Вы не авторизированы", 401));
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const currentUser = await User.findById(decoded.id);
+
+    if (!currentUser) {
+        return next(
+            new AppError(
+                "Пользователя связанного с этим токенок больше не существует",
+                401
+            )
+        );
+    }
+    req.user = currentUser;
+    next();
+});
