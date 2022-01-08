@@ -71,3 +71,18 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.user = currentUser;
     next();
 });
+
+exports.getUser = catchAsync(async (req, res, next) => {
+    const { id } = req.user;
+
+    const user = await User.findOne({ id });
+
+    if (!user) {
+        return next(new AppError("Пользователя с таким id не существует", 400));
+    }
+
+    res.status(200).json({
+        status: "success",
+        user,
+    });
+});

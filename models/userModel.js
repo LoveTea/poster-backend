@@ -10,6 +10,11 @@ const userSchema = new mongoose.Schema(
         password: {
             type: String,
             required: true,
+            select: false,
+        },
+        avatar: {
+            type: String,
+            default: "/public/avatars/default_avatar.png",
         },
     },
     {
